@@ -21,4 +21,20 @@ variables:
   .....
 ```
 
+Mục ![image](https://github.com/user-attachments/assets/4d4c7f33-8a4c-47b1-a845-a6e5bff5765b) là ngày thay lõi, vị trí lõi theo màu sắc.
+Thay đổi thời gian thay lõi tại
+```
+variables:
+  .....
+  time_loi_loc: |
+    [[[
+      return `<span style="color:red">28/12</span> <span style="color:gray">|</span> 
+      <span style="color:black">28/12</span> <span style="color:gray">|</span> 
+      <span style="color:blue">28/12</span> <span style="color:gray">|</span> 
+      28/12 <span style="color:gray">|</span> 
+      28/12`;
+    ]]]
+  .....
+```
+
 ![Untitled video - Made with Clipchamp (1)](https://github.com/user-attachments/assets/acc3eaa1-2bb4-4322-85ad-21db8bffee18)
