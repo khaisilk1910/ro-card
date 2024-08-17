@@ -24,6 +24,9 @@ variables:
 ```
 
 Mục ![image](https://github.com/user-attachments/assets/4d4c7f33-8a4c-47b1-a845-a6e5bff5765b) là ngày thay lõi, vị trí lõi theo màu sắc.
+
+**Lõi 1 | Lõi 2 | Lõi 3 | Lõi RO | Lõi Khử Mùi**
+
 Thay đổi thời gian thay lõi tại
 ```
 variables:
