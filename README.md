@@ -1,9 +1,11 @@
 # ro-card
-Card hiển thị thông tin máy lọc nước RO.
+**Card hiển thị thông tin máy lọc nước RO.**
+
+Mức nước và bong bóng động sẽ dâng theo giá trị hiện tại của **Sensor Hôm Nay**
 
 ![image](https://github.com/user-attachments/assets/8f20d532-24ef-4968-abf9-a402a77811fb)
 
-Phần động là mức nước tiêu thụ trong ngày với Min và Max có thể thay đổi trong code mục
+Phần động là mức nước tiêu thụ trong ngày với **Min và Max** có thể thay đổi trong code mục
 ```
 variables:
   .....
