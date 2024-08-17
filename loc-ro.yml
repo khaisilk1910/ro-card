@@ -14,6 +14,7 @@ variables:
   main_unit: A
   main_min: 0
   main_max: 20
+  info_card_entity_picture: /local/images/icon/water filter cartridges.svg
   time_loi_loc: |
     [[[
       return `<span style="color:red">28/12</span> <span style="color:gray">|</span> 
@@ -494,7 +495,7 @@ custom_fields:
       show_icon: true
       show_name: true
       show_entity_picture: true
-      entity_picture: /local/images/icon/water filter cartridges.svg
+      entity_picture: '[[[ return variables.info_card_entity_picture; ]]]'
       extra_styles: '[[[ return variables.extra_styles; ]]]'
       name: '[[[ return variables.main_name; ]]]'
       styles:
