@@ -375,6 +375,9 @@ custom_fields:
       var percentage = Math.floor((current - minPosition) / (maxPosition - minPosition)*100);
       var percentage1 = Math.floor((500)-(percentage*10));
       var percentage2 = percentage1;
+      var minPosition_bubble = 990;
+      var maxPosition_bubble = 22;
+      var bubble_top = Math.floor((minPosition_bubble+((current/maxPosition_bubble)*(maxPosition_bubble-minPosition_bubble))));
       return `<svg width="100%" height="100%" viewBox="0 0 1000 1000"
       xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
       overflow="auto" shape-rendering="auto" fill="#ffffff">
@@ -391,6 +394,91 @@ custom_fields:
          </animateMotion>
          </use>
         </g>
+        <!-- Bubble 1 -->
+        <circle cx="300" cy="680" r="60" fill="white" opacity="0.7">
+          <animate
+            attributeName="cy"
+            from="980"
+            to="${bubble_top}"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="r"
+            from="10"
+            to="20"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <!-- Bubble 2 -->
+        <circle cx="380" cy="370" r="35" fill="white" opacity="0.7">
+          <animate
+            attributeName="cy"
+            from="990"
+            to="${bubble_top}"
+            dur="7s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="r"
+            from="9"
+            to="15"
+            dur="7s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <!-- Bubble 3 -->
+        <circle cx="480" cy="370" r="55" fill="white" opacity="0.7">
+          <animate
+            attributeName="cy"
+            from="990"
+            to="${bubble_top}"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="r"
+            from="15"
+            to="28"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <!-- Bubble 4 -->
+        <circle cx="550" cy="350" r="10" fill="white" opacity="0.7">
+          <animate
+            attributeName="cy"
+            from="1010"
+            to="${bubble_top}"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="r"
+            from="11"
+            to="15"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <!-- Bubble 5 -->
+        <circle cx="650" cy="550" r="20" fill="white" opacity="0.7">
+          <animate
+            attributeName="cy"
+            from="950"
+            to="${bubble_top}"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="r"
+            from="15"
+            to="25"
+            dur="4s"
+            repeatCount="indefinite"
+          />
+        </circle>
       </svg>`;
     ]]]
   info_card:
