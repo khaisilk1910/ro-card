@@ -13,7 +13,7 @@ variables:
 ```
 Tất cả nội dung có thể thay đổi ở trong ```variables:``` hoặc có thể thay đổi trong code tùy ý.
 
-Tải file svg về lưu vào HASS và thay đổi đường dẫn file theo vị trí lưu của bạn tại
+Tải file ```water filter cartridges.svg``` về lưu vào HASS và thay đổi đường dẫn file theo vị trí lưu của bạn tại
 ```
 variables:
   .....
