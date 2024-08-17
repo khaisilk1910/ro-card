@@ -1,14 +1,4 @@
 type: custom:button-card
-color_type: label-card
-label: |
-  [[[
-    return states['sensor.rice_ro_monitor_tds_sensor'].state +' ppm';
-  ]]]
-name: |
-  [[[
-    return 'Vừa lấy '+states['sensor.rice_ro_monitor_luong_nuoc_vua_lay'].state +' L';
-  ]]]
-state_display: Lọc RO
 variables:
   main_name: Hôm nay
   main_entity: sensor.rice_ro_monitor_luong_nuoc_tieu_thu_hom_nay
@@ -17,19 +7,24 @@ variables:
     [[[
       if (states['sensor.rice_ro_monitor_tds_sensor'].state > 10)
         return 'rgba(85,85,85,1)';
-      return 'rgba(0,255,255,1)';
+      return 'rgba(255,255,222,0.8)';
     ]]]
   main_border_radius: 50%
   main_border_color: rgba(255,255,222,1)
   main_unit: A
   main_min: 0
   main_max: 20
-  main_state_font_size: 58
+  time_loi_loc: |
+    [[[
+      return `<span style="color:red">12</span> | <span style="color:black">12</span> | <span style="color:blue">12</span> | 12 | 12`;
+    ]]]
+  time_loi_loc_font_size: 12
+  main_state_font_size: 50
   main_state_color: rgba(0,0,0,1)
   main_state_font_weight: 600
   main_name_font_weight: 500
-  main_name_color: rgba(0,0,0,0.6)
-  main_background_color: >-
+  main_name_color: rgba(128,128,128,1)
+  main_background_color: >
     radial-gradient(circle, rgba(0,255,222,1) 0%, rgba(62,125,111,1) 90%,
     rgba(46,182,0,1) 100%)
   water_color: |
@@ -38,7 +33,82 @@ variables:
         return 'rgba(85,85,85,1)';
       return 'rgba(0,255,255,1)';
     ]]]
+  other_icon_color: rgba(255,255,0, 1)
+  other_background_color: rgba(255,255,0,0.2)
+  thang_nay: sensor.luong_nuoc_tieu_thu_thang_nay
+  tong: sensor.rice_ro_monitor_tong_luong_nuoc_tieu_thu
+  bom_status: binary_sensor.rice_ro_monitor_bom
+  dau_vao: binary_sensor.rice_ro_monitor_nuoc_dau_vao
+  extra_styles: |
+    @keyframes rubberband-horizontal {
+      0% {
+        transform:scale3d(1,1,1);
+      }
+      30% {
+        transform:scale3d(1.25,.75,1);
+      }
+      40% {
+        transform:scale3d(.75,1.25,1);
+      }
+      50% {
+        transform:scale3d(1.15,.85,1);
+      }
+      65% {
+        transform:scale3d(.95,1.05,1);
+      }
+      75% {
+        transform:scale3d(1.05,.95,1);
+      }
+      100% {
+        transform:scale3d(1,1,1);
+      }
+    }
+    @keyframes alert {
+      0% {
+        transform:translateX(0);
+      }
+      5% {
+        transform:translateX(-5px);
+      }
+      10% {
+        transform:translateX(5px);
+      }
+      15% {
+        transform:translateX(-5px);
+      }
+      20% {
+        transform:translateX(5px);
+      }
+      25% {
+        transform:translateX(-5px);
+      }
+      30% {
+        transform:translateX(5px);
+      }
+      35% {
+        transform:translateX(-5px);
+      }
+      40% {
+        transform:translateX(5px);
+      }
+      45% {
+        transform:translateX(-5px);
+      }
+      50% {
+        transform:translateX(0);
+      }
+    }
 entity: '[[[ return variables.main_entity; ]]]'
+color_type: label-card
+label: |
+  [[[
+    return `💧${states['sensor.rice_ro_monitor_tds_sensor'].state}`;
+  ]]]
+name: |
+  [[[
+    return 'Vừa lấy '+states['sensor.rice_ro_monitor_luong_nuoc_vua_lay'].state +' L';
+  ]]]
+state_display: '[[[ return variables.time_loi_loc; ]]]'
 show_name: true
 show_label: true
 show_state: true
@@ -62,32 +132,34 @@ styles:
   label:
     - z-index: 1
     - position: absolute
+    - justify-self: center
     - color: |
         [[[
           if (states['sensor.rice_ro_monitor_tds_sensor'].state > 10)
             return 'red';
-          return 'rgba(255,255,255,1)';
+          return 'rgba(0,0,0,1)';
         ]]]
-    - font-size: 35px
+    - font-size: '[[[ return Math.floor(variables.main_state_font_size/1.5)+''px''; ]]]'
     - font-weight: 800
     - align-self: center
-    - top: 35%
+    - top: 2.5%
   name:
     - z-index: 1
     - position: absolute
+    - justify-self: center
     - color: red
-    - font-size: 14px
+    - font-size: '[[[ return Math.floor(variables.main_state_font_size/3.6)+''px''; ]]]'
     - font-weight: 600
     - align-self: center
-    - top: 58%
+    - top: 57.7%
   state:
     - z-index: 1
     - position: absolute
-    - color: yellow
-    - font-size: 30px
+    - color: rgba(0,0,0,1)
+    - font-size: '[[[ return Math.floor(variables.time_loi_loc_font_size)+''px''; ]]]'
     - font-weight: 600
-    - align-self: center
-    - top: 6%
+    - justify-self: center
+    - top: 27.5%
   custom_fields:
     background_in_card:
       - position: absolute
@@ -113,64 +185,181 @@ styles:
       - align-self: center
       - justify-self: center
     tong:
+      - z-index: 1
       - position: absolute
-      - justify-self: end
-      - right: 4%
+      - align-self: center
+      - right: 8%
     thang_nay:
+      - z-index: 1
+      - position: absolute
+      - align-self: center
+      - left: 8%
+    bom:
+      - z-index: 1
+      - position: absolute
+      - justify-self: start
+      - bottom: 5%
+      - left: 38%
+    dau_vao:
+      - z-index: 1
       - position: absolute
       - background: none
-      - left: 4%
+      - bottom: 5%
+      - right: 38%
+    loi_loc:
+      - z-index: 1
+      - position: absolute
+      - background: none
+      - justify-self: center
+      - top: 10%
 custom_fields:
+  bom:
+    card:
+      type: custom:button-card
+      entity: '[[[ return variables.bom_status; ]]]'
+      show_name: false
+      show_state: false
+      icon: mdi:pump
+      extra_styles: '[[[ return variables.extra_styles; ]]]'
+      styles:
+        card:
+          - background: none
+          - border: none
+        img_cell:
+          - width: 40px
+          - height: 40px
+          - align-self: center
+          - justify-self: center
+          - border-radius: '[[[ return variables.main_border_radius; ]]]'
+          - background: '[[[ return variables.other_background_color; ]]]'
+        icon:
+          - width: 25px
+          - height: 25px
+          - align-self: center
+          - justify-self: center
+          - color: '[[[ return variables.other_icon_color; ]]]'
+      state:
+        - value: 'on'
+          styles:
+            img_cell:
+              - background: rgba(255,0,0,.2)
+            icon:
+              - color: rgba(255,0,0,1)
+              - animation: >
+                  rubberband-horizontal 1s ease-out 0s infinite
+                  alternate-reverse both
+      tap_action:
+        action: more-info
+  dau_vao:
+    card:
+      type: custom:button-card
+      entity: '[[[ return variables.dau_vao; ]]]'
+      show_name: false
+      show_state: false
+      icon: mdi:pipe-valve
+      extra_styles: '[[[ return variables.extra_styles; ]]]'
+      styles:
+        card:
+          - background: none
+          - border: none
+        img_cell:
+          - width: 40px
+          - height: 40px
+          - align-self: center
+          - justify-self: center
+          - border-radius: '[[[ return variables.main_border_radius; ]]]'
+          - background: '[[[ return variables.other_background_color; ]]]'
+        icon:
+          - width: 25px
+          - height: 25px
+          - align-self: center
+          - justify-self: center
+          - color: '[[[ return variables.other_icon_color; ]]]'
+      state:
+        - value: 'off'
+          styles:
+            img_cell:
+              - background: rgba(255,0,0,0.2)
+            icon:
+              - color: rgba(255,0,0,1)
+              - animation: alert 2s linear 0s infinite alternate-reverse both
+      tap_action:
+        action: more-info
   thang_nay:
     card:
-      type: custom:mushroom-entity-card
-      entity: sensor.luong_nuoc_tieu_thu_thang_nay
-      primary_info: name
-      secondary_info: state
+      type: custom:button-card
+      entity: '[[[ return variables.thang_nay; ]]]'
       name: Tháng này
+      show_name: true
+      show_state: true
       icon: mdi:cup
-      icon_color: yellow
-      layout: vertical
-      card_mod:
-        style:
-          .: |
-            :host {
-              --card-secondary-font-weight: 600 !important;
-              --card-primary-font-size: 12px !important;
-              --card-secondary-font-size: 14px !important;
-              --card-primary-color: gray !important;
-              --card-secondary-color: rgba(0,0,0,1) !important;
-              --mush-icon-size: 60px !important;
-            }
-            ha-card {
-              box-shadow: none !important;
-              background: none !important;
-              border: none !important;
+      styles:
+        card:
+          - background: none
+          - border: none
+        name:
+          - font-size: >
+              [[[ return Math.floor(variables.main_state_font_size/4.5)+'px';
+              ]]]
+          - color: '[[[ return variables.main_name_color; ]]]'
+        state:
+          - font-size: '[[[ return Math.floor(variables.main_state_font_size/2.8)+''px'';]]]'
+          - font-weight: 600
+          - color: '[[[ return variables.main_state_color; ]]]'
+        img_cell:
+          - width: 55px
+          - height: 55px
+          - align-self: center
+          - justify-self: center
+          - border-radius: '[[[ return variables.main_border_radius; ]]]'
+          - background: '[[[ return variables.other_background_color; ]]]'
+        icon:
+          - width: 35px
+          - height: 35px
+          - align-self: center
+          - justify-self: center
+          - color: '[[[ return variables.other_icon_color; ]]]'
+      tap_action:
+        action: more-info
   tong:
     card:
-      type: custom:mushroom-entity-card
-      entity: sensor.rice_ro_monitor_tong_luong_nuoc_tieu_thu
-      primary_info: name
-      secondary_info: state
+      type: custom:button-card
+      entity: '[[[ return variables.tong; ]]]'
       name: Tổng 02/04/2024
-      icon_color: yellow
-      layout: vertical
-      card_mod:
-        style:
-          .: |
-            :host {
-              --card-secondary-font-weight: 600 !important;
-              --card-primary-font-size: 12px !important;
-              --card-secondary-font-size: 14px !important;
-              --card-primary-color: gray !important;
-              --card-secondary-color: rgba(0,0,0,1) !important;
-              --mush-icon-size: 60px !important;
-            }
-            ha-card {
-              box-shadow: none !important;
-              background: none !important;
-              border: none !important;
-  background_in_card: |-
+      show_name: true
+      show_state: true
+      icon: mdi:cup
+      styles:
+        card:
+          - background: none
+          - border: none
+        name:
+          - font-size: >
+              [[[ return Math.floor(variables.main_state_font_size/4.5)+'px';
+              ]]]
+          - color: '[[[ return variables.main_name_color; ]]]'
+        state:
+          - font-size: >
+              [[[ return Math.floor(variables.main_state_font_size/2.8)+'px';
+              ]]]
+          - font-weight: 600
+          - color: '[[[ return variables.main_state_color; ]]]'
+        img_cell:
+          - width: 55px
+          - height: 55px
+          - align-self: center
+          - justify-self: center
+          - border-radius: '[[[ return variables.main_border_radius; ]]]'
+          - background: '[[[ return variables.other_background_color; ]]]'
+        icon:
+          - width: 35px
+          - height: 35px
+          - align-self: center
+          - justify-self: center
+          - color: '[[[ return variables.other_icon_color; ]]]'
+      tap_action:
+        action: more-info
+  background_in_card: |
     [[[
       var speed_dur = '4s'
       if (states['binary_sensor.rice_ro_monitor_lay_nuoc'].state == 'on')
@@ -211,6 +400,9 @@ custom_fields:
       show_label: false
       show_icon: true
       show_name: true
+      show_entity_picture: true
+      entity_picture: /local/images/icon/water filter cartridges.svg
+      extra_styles: '[[[ return variables.extra_styles; ]]]'
       name: '[[[ return variables.main_name; ]]]'
       styles:
         card:
@@ -227,26 +419,27 @@ custom_fields:
           - justify-self: center
           - font-size: '[[[ return Math.floor(variables.main_state_font_size/2)+''px''; ]]]'
           - color: '[[[ return variables.main_name_color; ]]]'
+          - margin: '-10px 0px 0px 0px'
         state:
           - position: absolute
           - top: calc(100%/1.3)
           - justify-self: center
           - text-align: center
-          - margin: 0px 0px 0px 0px
+          - margin: '-20px 0px 0px 0px'
           - font-size: '[[[ return Math.floor(variables.main_state_font_size)+''px''; ]]]'
           - font-weight: '[[[ return variables.main_state_font_weight; ]]]'
           - color: '[[[ return variables.main_state_color; ]]]'
         img_cell:
           - position: absolute
-          - top: calc(100%/60)
-          - height: calc(100%/1.5)
+          - top: calc(100%/20)
+          - height: calc(100%/1.8)
           - background: none
           - justify-self: center
           - padding: 0px 0px 0px 0px
           - margin: 0px 0px 0px 0px
         icon:
           - align-items: end
-          - width: calc(100%/1.5)
+          - width: calc(100%/1.9)
           - padding: 0px 0px 0px 0px
           - margin: 0px 0px 0px 0px
           - color: '[[[ return variables.main_icon_color; ]]]'
