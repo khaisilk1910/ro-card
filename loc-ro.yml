@@ -16,9 +16,14 @@ variables:
   main_max: 20
   time_loi_loc: |
     [[[
-      return `<span style="color:red">12</span> | <span style="color:black">12</span> | <span style="color:blue">12</span> | 12 | 12`;
+      return `<span style="color:red">28/12</span> <span style="color:gray">|</span> 
+      <span style="color:black">28/12</span> <span style="color:gray">|</span> 
+      <span style="color:blue">28/12</span> <span style="color:gray">|</span> 
+      28/12 <span style="color:gray">|</span> 
+      28/12`;
     ]]]
-  time_loi_loc_font_size: 12
+  time_loi_loc_font_size: 7
+  time_loi_loc_top: 28.1%
   main_state_font_size: 50
   main_state_color: rgba(0,0,0,1)
   main_state_font_weight: 600
@@ -33,8 +38,8 @@ variables:
         return 'rgba(85,85,85,1)';
       return 'rgba(0,255,255,1)';
     ]]]
-  other_icon_color: rgba(255,255,0, 1)
-  other_background_color: rgba(255,255,0,0.2)
+  other_icon_color: rgba(0, 0, 128, 1)
+  other_background_color: rgba(0, 0, 128,0.2)
   thang_nay: sensor.luong_nuoc_tieu_thu_thang_nay
   tong: sensor.rice_ro_monitor_tong_luong_nuoc_tieu_thu
   bom_status: binary_sensor.rice_ro_monitor_bom
@@ -159,7 +164,7 @@ styles:
     - font-size: '[[[ return Math.floor(variables.time_loi_loc_font_size)+''px''; ]]]'
     - font-weight: 600
     - justify-self: center
-    - top: 27.5%
+    - top: '[[[ return variables.time_loi_loc_top; ]]]'
   custom_fields:
     background_in_card:
       - position: absolute
